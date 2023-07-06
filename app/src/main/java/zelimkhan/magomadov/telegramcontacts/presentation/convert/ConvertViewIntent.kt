@@ -5,5 +5,7 @@ sealed interface ConvertViewIntent {
     object ConvertFile : ConvertViewIntent
     object OpenFile : ConvertViewIntent
     object FileOpened : ConvertViewIntent
+    object SendFile: ConvertViewIntent
+    object FileSent : ConvertViewIntent
     class FileSelected(val filePath: String) : ConvertViewIntent
 }

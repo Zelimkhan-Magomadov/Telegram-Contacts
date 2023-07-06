@@ -33,7 +33,9 @@ class ConvertViewModel @Inject constructor(
                 is ConvertViewIntent.FileSelected -> onFileSelected(intent.filePath)
                 ConvertViewIntent.OpenFile -> openFile()
                 ConvertViewIntent.SelectFile -> selectFile()
-                ConvertViewIntent.FileOpened -> fileOpened()
+                ConvertViewIntent.SendFile -> sendFile()
+                ConvertViewIntent.FileOpened -> noActionOnTheFile()
+                ConvertViewIntent.FileSent -> noActionOnTheFile()
             }
         }
     }
@@ -68,7 +70,13 @@ class ConvertViewModel @Inject constructor(
         }
     }
 
-    private fun fileOpened() {
+    private fun sendFile() {
+        convertedFile?.apply {
+            _event.value = ConvertViewEvent.SendFile(this)
+        }
+    }
+
+    private fun noActionOnTheFile() {
         _event.value = null
     }
 }
