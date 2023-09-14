@@ -20,7 +20,11 @@
 ## Требования
 **Android 8.0 (API level 26)**
 
+## Установить
+[Скачать APK](https://github.com/Zelimkhan-Magomadov/Telegram-Contacts/releases/download/v1.0/Telegram-Contacts.apk)
+
 ## Инструкция
+
 **Обратите внимание, что все действия можно выполнять только из версии Telegram для компьютера!**
 
 Зайдите в настройки Telegram и выберите раздел "Продвинутые настройки".
