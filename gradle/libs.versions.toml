@@ -1,0 +1,83 @@
+[versions]
+#noinspection AndroidGradlePluginVersion
+agp = "8.5.2"
+kotlin = "1.9.23"
+coreKtx = "1.13.1"
+
+# Compose
+activityCompose = "1.9.0"
+composeBom = "2024.05.00"
+
+# Test
+junit = "4.13.2"
+
+# Android test
+espressoCore = "3.5.1"
+junitVersion = "1.1.5"
+
+# Dagger-Hilt
+hiltAndroid = "2.51.1"
+hiltCompiler = "2.51.1"
+hiltNavigationCompose = "1.2.0"
+googleDaggerHiltAndroid = "2.51.1"
+
+# Kotlin serialization
+converterKotlinxSerialization = "2.11.0"
+kotlinxSerializationJson = "1.6.3"
+
+# KSP
+ksp = "1.9.63"
+googleDevtoolsKsp = "1.9.23-1.0.19"
+
+# Lifecycle
+lifecycleViewmodelCompose = "2.8.1"
+lifecycleRuntimeCompose = "2.8.1"
+lifecycleRuntimeKtx = "2.8.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+# Compose
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+# Test
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Android test
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+# KSP
+ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "ksp" }
+
+# Dagger-Hilt
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler" }
+
+# Kotlin serialization
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "converterKotlinxSerialization" }
+
+# Lifecycle
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+# KSP
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "googleDevtoolsKsp" }
+
+# Dagger-Hilt
+google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "googleDaggerHiltAndroid" }
