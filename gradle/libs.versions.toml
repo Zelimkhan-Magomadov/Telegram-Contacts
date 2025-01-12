@@ -1,38 +1,38 @@
 [versions]
 #noinspection AndroidGradlePluginVersion
-agp = "8.5.2"
-kotlin = "1.9.23"
-coreKtx = "1.13.1"
+agp = "8.6.1"
+kotlin = "2.1.0"
+coreKtx = "1.15.0"
 
 # Compose
-activityCompose = "1.9.0"
-composeBom = "2024.05.00"
+activityCompose = "1.9.3"
+composeBom = "2024.12.01"
 
 # Test
 junit = "4.13.2"
 
 # Android test
-espressoCore = "3.5.1"
-junitVersion = "1.1.5"
+espressoCore = "3.6.1"
+junitVersion = "1.2.1"
 
 # Dagger-Hilt
-hiltAndroid = "2.51.1"
-hiltCompiler = "2.51.1"
+hiltAndroid = "2.52"
+hiltCompiler = "2.52"
 hiltNavigationCompose = "1.2.0"
 googleDaggerHiltAndroid = "2.51.1"
 
 # Kotlin serialization
 converterKotlinxSerialization = "2.11.0"
-kotlinxSerializationJson = "1.6.3"
+kotlinxSerializationJson = "1.7.3"
 
 # KSP
 ksp = "1.9.63"
-googleDevtoolsKsp = "1.9.23-1.0.19"
+googleDevtoolsKsp = "2.1.0-1.0.29"
 
 # Lifecycle
-lifecycleViewmodelCompose = "2.8.1"
-lifecycleRuntimeCompose = "2.8.1"
-lifecycleRuntimeKtx = "2.8.1"
+lifecycleViewmodelCompose = "2.8.7"
+lifecycleRuntimeCompose = "2.8.7"
+lifecycleRuntimeKtx = "2.8.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

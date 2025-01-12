@@ -83,7 +83,7 @@ fun MainContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { getContent.launch("application/json") }
+            onClick = { getContent.launch("*/*") }
         ) {
             Text(text = "Выбрать файл")
         }
