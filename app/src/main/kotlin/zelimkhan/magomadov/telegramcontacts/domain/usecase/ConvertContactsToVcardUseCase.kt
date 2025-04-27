@@ -3,23 +3,25 @@ package zelimkhan.magomadov.telegramcontacts.domain.usecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import zelimkhan.magomadov.telegramcontacts.domain.model.Contact
+import zelimkhan.magomadov.telegramcontacts.domain.model.ContactsFormat
 import zelimkhan.magomadov.telegramcontacts.domain.model.Vcard
-import zelimkhan.magomadov.telegramcontacts.domain.pars.ContactsParser
+import zelimkhan.magomadov.telegramcontacts.domain.parser.ContactsParser
 import zelimkhan.magomadov.telegramcontacts.domain.repository.FileRepository
 import javax.inject.Inject
 
 typealias VcardFilePath = String
 
-class ConvertJsonToVcardUseCase @Inject constructor(
+class ConvertContactsToVcardUseCase @Inject constructor(
     private val fileRepository: FileRepository,
-    private val contactsParser: ContactsParser,
+    private val parsers: Map<ContactsFormat, @JvmSuppressWildcards ContactsParser>,
     private val encodeQuotedPrintableUseCase: EncodeQuotedPrintableUseCase,
     private val formatPhoneNumberUseCase: FormatPhoneNumberUseCase,
 ) {
-    suspend operator fun invoke(jsonFilePath: String): VcardFilePath {
+    suspend operator fun invoke(filePath: String, format: ContactsFormat): VcardFilePath {
         return withContext(Dispatchers.Default) {
-            val json = fileRepository.read(jsonFilePath)
-            val contacts = contactsParser.parse(json)
+            val parser = parsers[format] ?: error("Parser not found for format: $format")
+            val content = fileRepository.read(filePath)
+            val contacts = parser(content)
             val vCardContacts = convertToVcard(contacts)
             vCardContacts.joinToString("\r\n")
         }

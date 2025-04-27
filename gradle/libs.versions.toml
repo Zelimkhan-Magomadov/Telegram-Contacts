@@ -25,6 +25,9 @@ googleDaggerHiltAndroid = "2.51.1"
 converterKotlinxSerialization = "2.11.0"
 kotlinxSerializationJson = "1.7.3"
 
+# Jsoup
+jsoup = "1.19.1"
+
 # KSP
 ksp = "1.9.63"
 googleDevtoolsKsp = "2.1.0-1.0.29"
@@ -66,6 +69,9 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 # Kotlin serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "converterKotlinxSerialization" }
+
+# Jsoup
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 
 # Lifecycle
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }

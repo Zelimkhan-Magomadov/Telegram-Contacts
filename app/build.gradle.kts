@@ -87,6 +87,9 @@ dependencies {
     // Kotlin serialization
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.converter.kotlinx.serialization)
+    
+    // Jsoup
+    implementation(libs.jsoup)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.compose)

@@ -1,40 +1,40 @@
 package zelimkhan.magomadov.telegramcontacts.di
 
-import android.content.Context
+import dagger.Binds
+import dagger.MapKey
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
+import dagger.multibindings.IntoMap
+import zelimkhan.magomadov.telegramcontacts.data.parser.HtmlContactsParser
+import zelimkhan.magomadov.telegramcontacts.data.parser.JsonContactsParser
 import zelimkhan.magomadov.telegramcontacts.data.repository.AndroidFileNameRepository
 import zelimkhan.magomadov.telegramcontacts.data.repository.CacheFileRepository
-import zelimkhan.magomadov.telegramcontacts.data.pars.TelegramContactsParser
-import zelimkhan.magomadov.telegramcontacts.domain.pars.ContactsParser
+import zelimkhan.magomadov.telegramcontacts.domain.model.ContactsFormat
+import zelimkhan.magomadov.telegramcontacts.domain.parser.ContactsParser
 import zelimkhan.magomadov.telegramcontacts.domain.repository.FileNameRepository
 import zelimkhan.magomadov.telegramcontacts.domain.repository.FileRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+abstract class AppModule {
 
-    @Provides
-    fun provideFileRepository(@ApplicationContext context: Context): FileRepository {
-        return CacheFileRepository(context)
-    }
+    @Binds
+    abstract fun bindFileRepository(cacheFileRepository: CacheFileRepository): FileRepository
 
-    @Provides
-    fun provideFileNameRepository(@ApplicationContext context: Context): FileNameRepository {
-        return AndroidFileNameRepository(context)
-    }
+    @Binds
+    abstract fun bindFileNameRepository(androidFileNameRepository: AndroidFileNameRepository): FileNameRepository
 
-    @Provides
-    fun provideContactsParser(parser: Json): ContactsParser {
-        return TelegramContactsParser(parser)
-    }
+    @Binds
+    @IntoMap
+    @ContactsParserKey(ContactsFormat.HTML)
+    abstract fun bindHtmlContactsParser(parser: HtmlContactsParser): ContactsParser
 
-    @Provides
-    fun provideParser(): Json {
-        return Json { ignoreUnknownKeys = true }
-    }
+    @Binds
+    @IntoMap
+    @ContactsParserKey(ContactsFormat.JSON)
+    abstract fun bindJsonContactsParser(parser: JsonContactsParser): ContactsParser
 }
+
+@MapKey
+annotation class ContactsParserKey(val value: ContactsFormat)

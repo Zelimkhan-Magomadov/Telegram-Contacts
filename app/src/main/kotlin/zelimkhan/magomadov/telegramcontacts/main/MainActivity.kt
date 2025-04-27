@@ -75,7 +75,7 @@ fun MainContent(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = mainState.selectedFileName.ifEmpty {
-                "Выберите файл с экспортированными контактами в формате json"
+                "Выберите файл с экспортированными контактами"
             },
             textAlign = TextAlign.Center
         )
