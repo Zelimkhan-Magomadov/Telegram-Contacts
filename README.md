@@ -38,7 +38,7 @@
 
 <img src="https://i.ibb.co/8Y4fbV5/image.png" width="300">
 
-### 4. Пролистайте страницу до самого низа, выберите опцию одну из опций "Машиночитаемый JSON" или "Читаемый HTML" и снова нажмите "Экспортировать".
+### 4. Пролистайте страницу до самого низа, выберите одну из опций "Машиночитаемый JSON" или "Читаемый HTML" и снова нажмите "Экспортировать".
 
 <img src="https://i.ibb.co/Qv8VgRL/image.png" width="300">
 
@@ -50,7 +50,7 @@
 
 <img src="https://github.com/user-attachments/assets/f48c3798-5e24-4dbc-83b3-a5381e98fbec" width="300">
 
-## 5.1 Если вы выбрали формат HTML, то нужный файл находится в папке "lists" и называется contacts.html
+## 5.1 В случае если вы выбрали формат HTML, то нужный файл находится в папке "lists" и называется contacts.html
 
 <img src="https://github.com/user-attachments/assets/535a2f42-dd31-4154-bb29-b95ac49994d1" width="300">
 
