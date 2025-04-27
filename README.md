@@ -52,9 +52,9 @@
 
 ## 5.1 В случае если вы выбрали формат HTML, то нужный файл находится в папке "lists" и называется contacts.html
 
-<img src="https://github.com/user-attachments/assets/535a2f42-dd31-4154-bb29-b95ac49994d1" width="300">
+<img src="https://github.com/user-attachments/assets/535a2f42-dd31-4154-bb29-b95ac49994d1" width="600">
 
-<img src="https://github.com/user-attachments/assets/a42c8076-0284-4595-8573-6a8251e3f09b" width="300">
+<img src="https://github.com/user-attachments/assets/a42c8076-0284-4595-8573-6a8251e3f09b" width="600">
    
 ### 6. В приложении **Telegram Contacts** выберите экспортированный файл контактов, нажав на кнопку «Выбрать файл». Если вы скачали файл через телеграм, то он будет расположен по такому пути.
 
