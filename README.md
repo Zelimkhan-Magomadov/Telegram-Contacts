@@ -20,7 +20,7 @@
 **Android 5.0 (API level 21)**
 
 ## Установить
-[Скачать APK](https://github.com/Zelimkhan-Magomadov/Telegram-Contacts/releases/download/v1.0/Telegram-Contacts.apk)
+[Скачать APK](https://github.com/Zelimkhan-Magomadov/Telegram-Contacts/releases/download/v1.1/Telegram-Contacts.apk)
 
 ## Инструкция
 
