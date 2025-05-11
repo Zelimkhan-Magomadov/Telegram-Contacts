@@ -9,12 +9,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:name=".App"
-            android:theme="@style/Theme.TelegramContacts"
+            android:theme="@style/Theme.ContactsRevive"
             tools:targetApi="31">
         <activity
-                android:name=".main.MainActivity"
+                android:name="zelimkhan.magomadov.contactsrevive.ui.MainActivity"
                 android:exported="true"
-                android:theme="@style/Theme.TelegramContacts">
+                android:theme="@style/Theme.ContactsRevive">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <provider
-                android:name=".main.FileProvider"
+                android:name="zelimkhan.magomadov.contactsrevive.ui.conversion.FileProvider"
                 android:authorities="${applicationId}.FileProvider"
                 android:exported="false"
                 android:grantUriPermissions="true">

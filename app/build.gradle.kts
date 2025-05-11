@@ -3,16 +3,16 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.google.dagger.hilt.android)
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.0"
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.kotlinx.serialization.json)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "zelimkhan.magomadov.telegramcontacts"
+    namespace = "zelimkhan.magomadov.contactsrevive"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "zelimkhan.magomadov.telegramcontacts"
+        applicationId = "zelimkhan.magomadov.contactsrevive"
         minSdk = 21
         targetSdk = 35
         versionCode = 1

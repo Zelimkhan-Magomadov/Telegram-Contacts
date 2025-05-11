@@ -21,5 +21,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TelegramContacts"
+rootProject.name = "Contacts Revive"
 include(":app")
