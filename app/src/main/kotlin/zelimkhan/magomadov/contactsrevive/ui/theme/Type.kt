@@ -2,33 +2,53 @@ package zelimkhan.magomadov.contactsrevive.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import zelimkhan.magomadov.contactsrevive.R
 
-// Set of Material typography styles to start with
+val ComfortaaFontFamily = FontFamily(
+    Font(R.font.comfortaa_regular, FontWeight.Normal),
+    Font(R.font.comfortaa_medium, FontWeight.Medium),
+    Font(R.font.comfortaa_semi_bold, FontWeight.SemiBold),
+    Font(R.font.comfortaa_bold, FontWeight.Bold)
+)
+
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+    displayLarge = TextStyle(
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+    ),
+    displayMedium = TextStyle(
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+    ),
+    displaySmall = TextStyle(
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+    ),
+    labelLarge = TextStyle(
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = ComfortaaFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp,
+    ),
+    titleLarge = TextStyle(
+        fontFamily = ComfortaaFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+    ),
 )

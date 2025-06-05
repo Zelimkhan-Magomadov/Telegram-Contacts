@@ -2,10 +2,9 @@ package zelimkhan.magomadov.contactsrevive.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Cream = Color(0xFFFDF4E3)
+val Cream65 = Color(0xA6FDF4E3)
+val Gray100 = Color(0xFF333333)
+val Gray80 = Color(0xCC333333)
+val BlackGray = Color(0xFF1E1E1E)
+val BlackGray20 = Color(0x331E1E1E)

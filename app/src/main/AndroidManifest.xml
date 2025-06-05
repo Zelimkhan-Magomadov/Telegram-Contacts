@@ -12,7 +12,7 @@
             android:theme="@style/Theme.ContactsRevive"
             tools:targetApi="31">
         <activity
-                android:name="zelimkhan.magomadov.contactsrevive.ui.MainActivity"
+            android:name="zelimkhan.magomadov.contactsrevive.app.MainActivity"
                 android:exported="true"
                 android:theme="@style/Theme.ContactsRevive">
             <intent-filter>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <provider
-                android:name="zelimkhan.magomadov.contactsrevive.ui.conversion.FileProvider"
+            android:name="zelimkhan.magomadov.contactsrevive.feature.importing.FileProvider"
                 android:authorities="${applicationId}.FileProvider"
                 android:exported="false"
                 android:grantUriPermissions="true">

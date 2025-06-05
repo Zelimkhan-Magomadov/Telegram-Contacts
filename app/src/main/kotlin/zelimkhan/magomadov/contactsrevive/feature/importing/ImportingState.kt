@@ -1,10 +1,10 @@
-package zelimkhan.magomadov.contactsrevive.ui.conversion
+package zelimkhan.magomadov.contactsrevive.feature.importing
 
 import java.io.File
 
-data class ConversionState(
+data class ImportingState(
     val selectedFileName: String = "",
     val isFileSelected: Boolean = false,
     val isFileConverted: Boolean = false,
-    val convertedFile: File? = null
+    val convertedFile: File? = null,
 )

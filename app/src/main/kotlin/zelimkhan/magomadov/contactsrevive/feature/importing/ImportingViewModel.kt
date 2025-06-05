@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.contactsrevive.ui.conversion
+package zelimkhan.magomadov.contactsrevive.feature.importing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,13 +13,13 @@ import zelimkhan.magomadov.contactsrevive.domain.fileName.GetFileNameUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class ConversionViewModel @Inject constructor(
+class ImportingViewModel @Inject constructor(
     private val getFileNameUseCase: GetFileNameUseCase,
     private val fileRepository: FileRepository,
     private val convertContactsToVcardUseCase: ConvertContactsToVcardUseCase,
 ) : ViewModel() {
-    private val _conversionState = MutableStateFlow(ConversionState())
-    val mainState = _conversionState.asStateFlow()
+    private val _importingState = MutableStateFlow(ImportingState())
+    val mainState = _importingState.asStateFlow()
 
     private var selectedFilePath = ""
 
@@ -30,7 +30,7 @@ class ConversionViewModel @Inject constructor(
             val convertedFileName =
                 "${mainState.value.selectedFileName.dropLastWhile { it != '.' }}vcf"
             val convertedFile = fileRepository.save(content = vcard, name = convertedFileName)
-            _conversionState.value = mainState.value.copy(
+            _importingState.value = mainState.value.copy(
                 selectedFileName = convertedFileName,
                 isFileConverted = true,
                 convertedFile = convertedFile
@@ -41,7 +41,7 @@ class ConversionViewModel @Inject constructor(
     fun onFileSelected(path: String) {
         viewModelScope.launch {
             selectedFilePath = path
-            _conversionState.value = mainState.value.copy(
+            _importingState.value = mainState.value.copy(
                 selectedFileName = getFileNameUseCase(path),
                 isFileSelected = true,
                 isFileConverted = false

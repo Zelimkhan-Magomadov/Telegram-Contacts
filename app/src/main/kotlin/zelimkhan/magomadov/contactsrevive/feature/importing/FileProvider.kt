@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.contactsrevive.ui.conversion
+package zelimkhan.magomadov.contactsrevive.feature.importing
 
 import androidx.core.content.FileProvider
 

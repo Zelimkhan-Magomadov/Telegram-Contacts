@@ -1,11 +1,11 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.0"
 kotlin = "2.1.20"
 coreKtx = "1.16.0"
 
 # Compose
 activityCompose = "1.10.1"
-composeBom = "2025.04.01"
+composeBom = "2025.05.00"
 
 # Test
 junit = "4.13.2"
@@ -14,11 +14,14 @@ junit = "4.13.2"
 espressoCore = "3.6.1"
 junitVersion = "1.2.1"
 
+# Compose navigation
+composeNavigation = "2.8.5"
+
 # Dagger-Hilt
 hiltAndroid = "2.56.2"
 hiltCompiler = "2.56.2"
 hiltNavigationCompose = "1.2.0"
-googleDaggerHiltAndroid = "2.51.1"
+googleDaggerHiltAndroid = "2.56"
 
 # Kotlin serialization
 converterKotlinxSerialization = "2.11.0"
@@ -31,9 +34,9 @@ jsoup = "1.20.1"
 googleDevtoolsKsp = "2.1.20-1.0.32"
 
 # Lifecycle
-lifecycleViewmodelCompose = "2.8.7"
-lifecycleRuntimeCompose = "2.8.7"
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleViewmodelCompose = "2.9.0"
+lifecycleRuntimeCompose = "2.9.0"
+lifecycleRuntimeKtx = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,6 +61,9 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 # KSP
 ksp = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "googleDevtoolsKsp" }
+
+# Navigation compose
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 
 # Dagger-Hilt
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
