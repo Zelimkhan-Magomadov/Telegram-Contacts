@@ -1,16 +1,18 @@
 package zelimkhan.magomadov.contactsrevive.app
 
+import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import dagger.hilt.android.AndroidEntryPoint
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.LaunchedEffect
 import zelimkhan.magomadov.contactsrevive.app.ui.ContactsReviveApp
 import zelimkhan.magomadov.contactsrevive.app.ui.rememberContactsReviveAppState
 import zelimkhan.magomadov.contactsrevive.ui.theme.ContactsReviveTheme
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,20 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             val appState = rememberContactsReviveAppState()
+
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { }
+
+            LaunchedEffect(Unit) {
+                permissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.WRITE_CONTACTS
+                    )
+                )
+            }
+
             ContactsReviveTheme {
                 ContactsReviveApp(appState)
             }

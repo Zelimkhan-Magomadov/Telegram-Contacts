@@ -1,136 +1,313 @@
 package zelimkhan.magomadov.contactsrevive.feature.importing
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
+import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import zelimkhan.magomadov.contactsrevive.ui.theme.ContactsReviveTheme
-import zelimkhan.magomadov.contactsrevive.ui.theme.Cream65
+import org.koin.androidx.compose.koinViewModel
+import zelimkhan.magomadov.contactsrevive.R
+import zelimkhan.magomadov.contactsrevive.ui.theme.AccentColor
+import zelimkhan.magomadov.contactsrevive.ui.theme.SuccessColor
 import java.io.File
 
 @Composable
 fun ImportingScreen(
-    viewModel: ImportingViewModel = hiltViewModel(),
+    viewModel: ImportingViewModel = koinViewModel(),
 ) {
-    val mainState = viewModel.mainState.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    NotFileSelectedContent(
-        modifier = Modifier,
-        importingState = mainState.value,
-        onFileSelected = viewModel::onFileSelected,
-        onFileConvert = viewModel::onFileConvert
-    )
+    if (state.showContactsList) {
+        ContactsScreen(
+            state = state,
+            onContactToggle = viewModel::toggleContactSelection,
+            onSave = viewModel::onSaveContacts
+        )
+    } else {
+        ImportingContent(
+            state = state,
+            onFileSelected = viewModel::onFileSelected,
+            onFileConvert = viewModel::onFileConvert
+        )
+    }
 }
 
 @Composable
-fun NotFileSelectedContent(
-    modifier: Modifier = Modifier,
-    importingState: ImportingState,
-    onFileSelected: (path: String) -> Unit,
+private fun ImportingContent(
+    state: ImportingState,
+    onFileSelected: (name: String, path: String) -> Unit,
     onFileConvert: () -> Unit,
 ) {
     val context = LocalContext.current
-    rememberLauncherForActivityResult(
+    val getFileLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? -> onFileSelected(uri.toString()) }
+    ) { uri: Uri? ->
+        uri?.let {
+            onFileSelected(uri.fileName(context), uri.toString())
+        }
+    }
 
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 32.dp),
-            text = importingState.selectedFileName.ifEmpty {
-                "Выберите файл с экспортированными контактами из Telegram"
-            },
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.displaySmall
-        )
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(133.dp))
-
-        Button(
+        Box(
             modifier = Modifier
-                .width(236.dp)
-                .height(48.dp),
-            onClick = {
-                val url = "https://yoomoney.ru/to/4100119133698213"
-                val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-                context.startActivity(intent)
-            }
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(MaterialTheme.colorScheme.surface)
+                .border(
+                    width = 1.dp,
+                    brush = Brush.verticalGradient(
+                        colors = listOf(AccentColor.copy(alpha = 0.5f), Color.Transparent)
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Text(text = "Выбрать файл")
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                if (state.isLoading) {
+                    CircularProgressIndicator(color = AccentColor)
+                } else {
+                    Icon(
+                        imageVector = if (state.isFileSelected && state.error == null) Icons.Default.Description else Icons.Default.FileUpload,
+                        contentDescription = null,
+                        tint = if (state.error != null) MaterialTheme.colorScheme.error else if (state.isFileSelected) SuccessColor else AccentColor,
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = when {
+                            state.error != null -> state.error
+                            state.isFileSelected -> state.selectedFileName
+                            else -> stringResource(R.string.importing_title)
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        color = if (state.error != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
         }
 
-        Spacer(modifier.height(32.dp))
-
-        Text(
-            text = "Поддерживаемые типы файлов: \nJSON и HTML",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.labelMedium,
-            color = Cream65
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        if (importingState.isFileSelected && importingState.isFileConverted.not()) {
-            Button(
-                onClick = onFileConvert
+        OutlinedButton(
+            onClick = { getFileLauncher.launch("*/*") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(16.dp),
+            enabled = !state.isLoading
+        ) {
+            Text(
+                text = if (state.isFileSelected) "Выбрать другой файл" else stringResource(R.string.select_file),
+                style = MaterialTheme.typography.labelLarge
             )
-            {
-                Text(text = "Конвертировать")
+        }
+
+        AnimatedVisibility(
+            visible = state.isFileConverted && !state.showContactsList,
+            enter = fadeIn() + slideInVertically(),
+            exit = fadeOut()
+        ) {
+            if (state.isFileConverted && state.convertedFile != null) {
+                ImportResultCard(state.importResult, context, state.convertedFile)
             }
         }
 
-        if (importingState.isFileConverted) {
-            Row {
-                Button(onClick = {
-                    actionOnTheFile(context, importingState.convertedFile!!, Intent.ACTION_VIEW)
-                }) {
-                    Text(text = "Добавить в контакты")
-                }
+        if (!state.isFileSelected && state.error == null) {
+            Text(
+                text = stringResource(R.string.importing_subtitle),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
+    }
+}
 
-                Spacer(modifier = Modifier.width(16.dp))
+@SuppressLint("Range")
+fun Uri.fileName(context: Context): String {
+    val cursor = context.contentResolver.query(this, null, null, null, null) ?: return "Unknown"
+    cursor.use {
+        if (it.moveToFirst()) {
+            return it.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        }
+    }
+    return "Unknown"
+}
 
-                Button(onClick = {
-                    actionOnTheFile(context, importingState.convertedFile!!, Intent.ACTION_SEND)
-                }) {
-                    Text(text = "Передать")
-                }
+@Composable
+private fun ImportResultCard(
+    result: ImportResult?,
+    context: Context,
+    file: File,
+) {
+    if (result == null) return
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(
+                alpha = 0.5f
+            )
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .background(SuccessColor.copy(alpha = 0.1f), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Default.CheckCircle,
+                    contentDescription = null,
+                    tint = SuccessColor,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Импорт завершен",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = SuccessColor
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Все выбранные контакты успешно сконвертированы в VCF",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                ResultStatItem(label = "Всего", value = "${result.totalSelected}")
+                ResultStatItem(label = "Готово", value = "${result.successCount}")
+                ResultStatItem(label = "Ошибки", value = "0")
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = { actionOnTheFile(context, file, Intent.ACTION_VIEW) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = SuccessColor)
+            ) {
+                Text("Добавить в телефон", color = Color.Black, fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = { actionOnTheFile(context, file, Intent.ACTION_SEND) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f))
+            ) {
+                Text("Поделиться VCF", color = MaterialTheme.colorScheme.onSurface)
             }
         }
+    }
+}
+
+@Composable
+private fun ResultStatItem(label: String, value: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = value,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = AccentColor
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+        )
     }
 }
 
 private fun actionOnTheFile(context: Context, file: File, action: String) {
     val uri = FileProvider.getUriForFile(
         context,
-        "${context.packageName}.FileProvider",
+        "${context.packageName}.fileprovider",
         file
     )
     val intent = Intent().apply {
@@ -140,7 +317,6 @@ private fun actionOnTheFile(context: Context, file: File, action: String) {
                 setDataAndType(uri, "text/x-vcard")
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-
             Intent.ACTION_SEND -> {
                 putExtra(Intent.EXTRA_STREAM, uri)
                 type = "text/x-vcard"
@@ -148,19 +324,6 @@ private fun actionOnTheFile(context: Context, file: File, action: String) {
             }
         }
     }
-    val chooser = Intent.createChooser(intent, "Выберите приложение")
+    val chooser = Intent.createChooser(intent, "Выберите действие")
     context.startActivity(chooser)
-}
-
-@Preview(showBackground = true, backgroundColor = Color.BLACK.toLong())
-@Composable
-private fun Preview() {
-    ContactsReviveTheme {
-        NotFileSelectedContent(
-            modifier = Modifier,
-            importingState = ImportingState(),
-            onFileSelected = {},
-            onFileConvert = {}
-        )
-    }
 }

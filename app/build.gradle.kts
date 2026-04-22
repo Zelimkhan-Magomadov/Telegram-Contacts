@@ -1,20 +1,19 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.google.devtools.ksp)
-    alias(libs.plugins.google.dagger.hilt.android)
     alias(libs.plugins.kotlinx.serialization.json)
     alias(libs.plugins.compose.compiler)
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "zelimkhan.magomadov.contactsrevive"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "zelimkhan.magomadov.contactsrevive"
-        minSdk = 21
-        targetSdk = 35
+        minSdk = 23
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -38,9 +37,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
-    }
     buildFeatures {
         compose = true
     }
@@ -62,6 +58,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
 
     // Test
     testImplementation(libs.junit)
@@ -76,16 +73,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // KSP
-    "ksp"(libs.ksp)
-
     // Navigation compose
     implementation(libs.navigation.compose)
 
-    // Dagger-Hilt
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    "ksp"(libs.hilt.compiler)
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.workmanager)
 
     // Kotlin serialization
     implementation(libs.kotlinx.serialization.json)
@@ -98,4 +92,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
 }

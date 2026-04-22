@@ -3,4 +3,8 @@
     <string name="feature_import">Импорт</string>
     <string name="feature_backup">Бэкап</string>
     <string name="feature_instruction">Инструкция</string>
+    <string name="importing_title">Выберите файл с экспортированными контактами из Telegram</string>
+    <string name="select_file">Выбрать файл</string>
+    <string name="importing_subtitle">Поддерживаемые типы файлов: \nJSON и HTML</string>
+    <string name="convert">Конвертировать</string>
 </resources>
