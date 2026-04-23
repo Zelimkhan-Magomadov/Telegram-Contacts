@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.contactsrevive.feature.backup
+package zelimkhan.magomadov.contactsrevive.feature.backup.data
 
 import android.content.Context
 import android.provider.ContactsContract
@@ -22,7 +22,7 @@ class AutoBackupWorker(
         return try {
             val localContacts = getLocalContacts()
             if (localContacts.isNotEmpty()) {
-                backupDao.insertBackup(
+                backupDao.insert(
                     BackupEntity(
                         name = "Auto Backup ${System.currentTimeMillis()}",
                         date = System.currentTimeMillis(),

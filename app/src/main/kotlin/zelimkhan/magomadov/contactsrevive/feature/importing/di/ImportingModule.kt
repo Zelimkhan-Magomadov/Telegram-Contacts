@@ -2,31 +2,30 @@ package zelimkhan.magomadov.contactsrevive.feature.importing.di
 
 import androidx.work.WorkManager
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.workerOf
+import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import zelimkhan.magomadov.contactsrevive.feature.backup.AutoBackupWorker
-import zelimkhan.magomadov.contactsrevive.feature.backup.BackupViewModel
-import zelimkhan.magomadov.contactsrevive.feature.importing.ImportingViewModel
+import zelimkhan.magomadov.contactsrevive.feature.backup.data.AutoBackupWorker
+import zelimkhan.magomadov.contactsrevive.feature.importing.data.parser.ContactsParserFactoryImpl
 import zelimkhan.magomadov.contactsrevive.feature.importing.data.parser.HtmlContactsParser
 import zelimkhan.magomadov.contactsrevive.feature.importing.data.parser.JsonContactsParser
 import zelimkhan.magomadov.contactsrevive.feature.importing.data.repository.CacheFileRepository
-import zelimkhan.magomadov.contactsrevive.feature.importing.domain.model.ContactsFormat
-import zelimkhan.magomadov.contactsrevive.feature.importing.domain.parser.ContactsParser
+import zelimkhan.magomadov.contactsrevive.feature.importing.domain.parser.ContactsParserFactory
 import zelimkhan.magomadov.contactsrevive.feature.importing.domain.repository.FileRepository
 import zelimkhan.magomadov.contactsrevive.feature.importing.domain.usecase.ConvertContactsToVcardUseCase
 import zelimkhan.magomadov.contactsrevive.feature.importing.domain.usecase.EncodeQuotedPrintableUseCase
 import zelimkhan.magomadov.contactsrevive.feature.importing.domain.usecase.FormatPhoneNumberUseCase
-import zelimkhan.magomadov.contactsrevive.feature.instruction.InstructionViewModel
+import zelimkhan.magomadov.contactsrevive.feature.importing.ui.importing.ImportingViewModel
 
 val importingModule = module {
-    single<FileRepository> { CacheFileRepository(get()) }
+    singleOf(::CacheFileRepository) { bind<FileRepository>() }
 
-    factory<ContactsParser>(named(ContactsFormat.HTML.name)) { HtmlContactsParser() }
-    factory<ContactsParser>(named(ContactsFormat.JSON.name)) { JsonContactsParser() }
+    factoryOf(::HtmlContactsParser)
+    factoryOf(::JsonContactsParser)
+    factoryOf(::ContactsParserFactoryImpl) { bind<ContactsParserFactory>() }
 
     factoryOf(::EncodeQuotedPrintableUseCase)
     factoryOf(::FormatPhoneNumberUseCase)
@@ -34,9 +33,7 @@ val importingModule = module {
 
     single { WorkManager.getInstance(androidContext()) }
 
-    viewModel { ImportingViewModel(get(), get(), get()) }
-    viewModel { BackupViewModel(get(), get(), androidContext(), get()) }
-    viewModelOf(::InstructionViewModel)
+    viewModelOf(::ImportingViewModel)
 
     workerOf(::AutoBackupWorker)
 }

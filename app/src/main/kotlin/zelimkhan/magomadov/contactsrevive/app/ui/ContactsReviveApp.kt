@@ -1,112 +1,90 @@
 package zelimkhan.magomadov.contactsrevive.app.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
 import zelimkhan.magomadov.contactsrevive.app.navigation.ContactsReviveNavHost
 import zelimkhan.magomadov.contactsrevive.app.navigation.TopLevelDestination
-import zelimkhan.magomadov.contactsrevive.ui.theme.BlackGray
+import zelimkhan.magomadov.contactsrevive.ui.theme.*
 import kotlin.reflect.KClass
 
 @Composable
-fun ContactsReviveApp(
-    appState: ContactsReviveAppState,
-    modifier: Modifier = Modifier,
-) {
-    ContactsReviveApp(
-        appState = appState
-    )
-}
+fun ContactsReviveApp(appState: ContactsReviveAppState) {
+    val hazeState = remember { HazeState() }
 
-@Composable
-private fun ContactsReviveApp(
-    appState: ContactsReviveAppState,
-) {
     Scaffold(
-        containerColor = Color.Black,
-        contentColor = MaterialTheme.colorScheme.onBackground,
+        containerColor = Background,
         bottomBar = {
-            ContactReviveNavigationBar(
+            AppNavigationBar(
                 topLevelDestinations = appState.topLevelDestinations,
                 currentDestination = appState.currentDestination,
-                navigateToTopLevelDestination = appState::navigateToTopLevelDestination
+                navigateToTopLevelDestination = appState::navigateToTopLevelDestination,
+                hazeState = hazeState
             )
-        }
-    ) { padding ->
-        Column(
-            Modifier
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .consumeWindowInsets(padding)
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
+                .hazeSource(state = hazeState)
         ) {
-            val destination = appState.currentTopLevelDestination
-            var shouldShowTopAppBar = false
-
-            if (destination != null) {
-                shouldShowTopAppBar = true
-                Text(
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-                    text = stringResource(destination.titleTextId),
-                    style = MaterialTheme.typography.displayLarge,
-                )
-            }
-
-            Box(
-                modifier = Modifier.consumeWindowInsets(
-                    when (shouldShowTopAppBar) {
-                        true -> WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
-                        false -> WindowInsets(0, 0, 0, 0)
-                    }
-                )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.safeDrawing)
             ) {
-                ContactsReviveNavHost(appState)
+                val destination = appState.currentTopLevelDestination
+                if (destination != null) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 24.dp),
+                        text = stringResource(destination.titleTextId),
+                        style = MaterialTheme.typography.displayMedium,
+                        color = OnSurface,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+
+                Box(modifier = Modifier.weight(1f)) {
+                    ContactsReviveNavHost(appState)
+                }
             }
         }
     }
 }
 
 @Composable
-fun ContactReviveNavigationBar(
+private fun AppNavigationBar(
     topLevelDestinations: List<TopLevelDestination>,
     currentDestination: NavDestination?,
     navigateToTopLevelDestination: (TopLevelDestination) -> Unit,
+    hazeState: HazeState,
 ) {
     Box(
         modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
-            .height(64.dp)
+            .padding(horizontal = 24.dp)
+            .padding(bottom = 24.dp)
+            .height(72.dp)
             .clip(CircleShape)
-            .background(color = BlackGray)
+            .hazeEffect(state = hazeState, style = HazeStyle(blurRadius = 20.dp, noiseAlpha = 0.1f))
+            .background(Color.White.copy(alpha = 0.05f))
     ) {
         NavigationBar(
             containerColor = Color.Transparent,
@@ -116,40 +94,34 @@ fun ContactReviveNavigationBar(
             topLevelDestinations.forEach { destination ->
                 val selected = currentDestination.isRouteInHierarchy(destination.baseRoute)
                 NavigationBarItem(
-                    selected = false,
+                    selected = selected,
                     onClick = { navigateToTopLevelDestination(destination) },
                     icon = {
-                        val currentIcon = when (selected) {
-                            true -> destination.selectedIcon
-                            false -> destination.unselectedIcon
-                        }
-
-                        Image(
+                        Icon(
                             modifier = Modifier.size(24.dp),
-                            painter = painterResource(currentIcon),
+                            painter = painterResource(if (selected) destination.selectedIcon else destination.unselectedIcon),
                             contentDescription = null,
+                            tint = if (selected) Background else OnSurfaceVariant
                         )
                     },
                     label = {
                         Text(
                             text = stringResource(destination.iconTextId),
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                            style = MaterialTheme.typography.labelSmall
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (selected) OnSurface else OnSurfaceVariant,
+                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                         )
-                    }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = Primary,
+                        unselectedIconColor = OnSurfaceVariant,
+                        selectedIconColor = Background
+                    ),
                 )
             }
         }
     }
 }
 
-private fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean {
-    return this?.hierarchy?.any { it.hasRoute(route) } == true
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    ContactsReviveApp(appState = rememberContactsReviveAppState())
-}
+private fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean =
+    this?.hierarchy?.any { it.hasRoute(route) } == true

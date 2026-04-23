@@ -2,14 +2,21 @@ package zelimkhan.magomadov.contactsrevive.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val DarkBackground = Color(0xFF0F0F0F)
-val SurfaceColor = Color(0xFF1A1A1A)
-val AccentColor = Color(0xFFD4AF37) // Golden accent for a premium feel
-val Cream = Color(0xFFFDF4E3)
-val Cream65 = Color(0xA6FDF4E3)
-val Gray100 = Color(0xFF333333)
-val Gray80 = Color(0xCC333333)
-val BlackGray = Color(0xFF1E1E1E)
+// ── Основные цвета (Figma Reference) ─────────────────────────────────────────
+val Background = Color(0xFF000000) // Чистый черный для OLED
+val Surface = Color(0xFF0A0A0A) // Чуть светлее для карточек
+val Primary = Color(0xFFFDF4E3) // Кремовый акцент
+val OnPrimary = Color(0xFF000000)
 
-val SuccessColor = Color(0xFF4CAF50)
-val ErrorColor = Color(0xFFE57373)
+// ── Дополнительные поверхности ────────────────────────────────────────────────
+val SurfaceVariant = Color(0xFF161616)
+val Outline = Color(0xFF262626)
+
+// ── Текст ──────────────────────────────────────────────────────────────────────
+val OnSurface = Color(0xFFFDF4E3)
+val OnSurfaceVariant = Color(0xFF9E9E9E) // Серый для второстепенного текста
+
+// ── Семантика ──────────────────────────────────────────────────────────────────
+val Success = Color(0xFF4CAF50)
+val Error = Color(0xFFE53935)
+val Warning = Color(0xFFFFB300)

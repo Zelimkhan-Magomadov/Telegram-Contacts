@@ -8,47 +8,95 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import zelimkhan.magomadov.contactsrevive.R
 
-val ComfortaaFontFamily = FontFamily(
+val ComfortaaFamily = FontFamily(
     Font(R.font.comfortaa_regular, FontWeight.Normal),
     Font(R.font.comfortaa_medium, FontWeight.Medium),
     Font(R.font.comfortaa_semi_bold, FontWeight.SemiBold),
-    Font(R.font.comfortaa_bold, FontWeight.Bold)
+    Font(R.font.comfortaa_bold, FontWeight.Bold),
 )
 
-val Typography = Typography(
+val AppTypography = Typography(
     displayLarge = TextStyle(
-        fontFamily = ComfortaaFontFamily,
+        fontFamily = ComfortaaFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
+        letterSpacing = (-0.5).sp
     ),
     displayMedium = TextStyle(
-        fontFamily = ComfortaaFontFamily,
+        fontFamily = ComfortaaFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
+        fontSize = 24.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = ComfortaaFontFamily,
-        fontWeight = FontWeight.Medium,
-        fontSize = 20.sp,
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp
     ),
-    labelLarge = TextStyle(
-        fontFamily = ComfortaaFontFamily,
+    headlineLarge = TextStyle(
+        fontFamily = ComfortaaFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontSize = 20.sp
     ),
-    labelMedium = TextStyle(
-        fontFamily = ComfortaaFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+    headlineMedium = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 17.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = ComfortaaFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
+    headlineSmall = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 15.sp
     ),
     titleLarge = TextStyle(
-        fontFamily = ComfortaaFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp
+    ),
+    titleMedium = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        letterSpacing = 0.1.sp
+    ),
+    titleSmall = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        letterSpacing = 0.1.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        lineHeight = 22.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        lineHeight = 20.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 18.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        letterSpacing = 0.3.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = ComfortaaFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp,
+        letterSpacing = 0.3.sp
     ),
 )

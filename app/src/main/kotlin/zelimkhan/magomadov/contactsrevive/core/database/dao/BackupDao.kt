@@ -11,14 +11,11 @@ import zelimkhan.magomadov.contactsrevive.core.database.entity.BackupEntity
 @Dao
 interface BackupDao {
     @Query("SELECT * FROM backups ORDER BY date DESC")
-    fun getAllBackups(): Flow<List<BackupEntity>>
+    fun observeAll(): Flow<List<BackupEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBackup(backup: BackupEntity)
+    suspend fun insert(backup: BackupEntity)
 
     @Delete
-    suspend fun deleteBackup(backup: BackupEntity)
-
-    @Query("SELECT * FROM backups WHERE id = :id")
-    suspend fun getBackupById(id: Long): BackupEntity?
+    suspend fun delete(backup: BackupEntity)
 }

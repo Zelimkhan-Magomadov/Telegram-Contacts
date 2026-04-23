@@ -100,4 +100,7 @@ dependencies {
 
     // WorkManager
     implementation(libs.androidx.work.runtime.ktx)
+
+    // Haze
+    implementation(libs.haze)
 }

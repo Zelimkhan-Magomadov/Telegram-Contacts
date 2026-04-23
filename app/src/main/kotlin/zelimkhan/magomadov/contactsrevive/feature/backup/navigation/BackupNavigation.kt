@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
-import zelimkhan.magomadov.contactsrevive.feature.backup.BackupScreen
+import zelimkhan.magomadov.contactsrevive.feature.backup.ui.BackupScreen
 
 @Serializable
 data object BackupRoute

@@ -10,5 +10,5 @@ data class BackupEntity(
     val name: String,
     val date: Long,
     val contactCount: Int,
-    val contactsJson: String, // Serialized list of contacts
+    val contactsJson: String,
 )
